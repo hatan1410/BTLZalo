@@ -3,11 +3,11 @@ import styled from 'styled-components/native';
 import BaseSafeAreaView from '../../components/BaseSafeAreaView';
 
 const TinNhanDetailScreen = memo((props: any) => {
-  const id = props.route.params?.id;
+  const name = props.route.params?.name;
   return (
     <BaseSafeAreaView>
       <SText>TinNhanDetailScreen</SText>
-      <SText>{id}</SText>
+      <SText>name: {name}</SText>
     </BaseSafeAreaView>
   );
 });

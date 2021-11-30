@@ -1,9 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {memo, useEffect, useCallback} from 'react';
+import React, {memo, useEffect, useCallback, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
 import styled from 'styled-components/native';
 import RenderTinNhanItem from './component/RenderTinNhanItem';
+import {apiService} from '../../helper/ApiService';
+import FakeApiModel from '../../model/FakeApiModel';
 
 const DATA = [
   {
@@ -22,16 +24,37 @@ const DATA = [
 
 const TinNhanScreen = memo((props: any) => {
   const nav = useNavigation();
+  const [listData, setListData] = useState<any>([]);
+  const postId = 1;
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
+    getDataFakeApi();
+  };
+
+  const getDataFakeApi = useCallback(() => {
+    apiService
+      .getFakeApi(postId)
+      .then(data => {
+        console.log('getApi ', data.data);
+        setListData(data.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
 
   const renderItem = useCallback(({item}) => {
-    return <RenderTinNhanItem id={item.id} title={item.title} />;
+    return <RenderTinNhanItem id={item.id} name={item.name} />;
   }, []);
 
   return (
     <BaseScreen>
       <Text style={styles.baseText}>TinNhanScreen</Text>
       <SFlatList
-        data={DATA}
+        data={listData}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />

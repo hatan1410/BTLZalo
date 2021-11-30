@@ -6,20 +6,20 @@ import {AppColors} from '../../../theme/AppColors';
 
 interface Props {
   id: number;
-  title: string;
+  name: string;
 }
 
 const RenderTinNhanItem = memo((props: Props) => {
   const nav = useNavigation();
 
   const doSelectTinNhan = useCallback(() => {
-    nav.navigate('TinNhanDetailScreen', {id: props.id});
+    nav.navigate('TinNhanDetailScreen', {name: props.name});
   }, []);
   return (
     <TouchableOpacity onPress={doSelectTinNhan}>
       <SContainer>
-        <STextId>{props.id}</STextId>
-        <STextTitle>{props.title}</STextTitle>
+        <STextId>id: {props.id}</STextId>
+        <STextTitle>name: {props.name}</STextTitle>
       </SContainer>
     </TouchableOpacity>
   );
