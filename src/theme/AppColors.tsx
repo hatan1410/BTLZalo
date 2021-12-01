@@ -17,4 +17,5 @@ export const AppColors = {
   black: '#000000',
 
   mainColor: '#0091FF',
+  backgroundColor: '#f3f4f6',
 };

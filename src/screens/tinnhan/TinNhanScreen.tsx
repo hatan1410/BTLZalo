@@ -7,21 +7,6 @@ import RenderTinNhanItem from './component/RenderTinNhanItem';
 import {apiService} from '../../helper/ApiService';
 import FakeApiModel from '../../model/FakeApiModel';
 
-const DATA = [
-  {
-    id: '1',
-    title: 'First Item',
-  },
-  {
-    id: '2',
-    title: 'Second Item',
-  },
-  {
-    id: '3',
-    title: 'Third Item',
-  },
-];
-
 const TinNhanScreen = memo((props: any) => {
   const nav = useNavigation();
   const [listData, setListData] = useState<any>([]);
@@ -38,7 +23,7 @@ const TinNhanScreen = memo((props: any) => {
     apiService
       .getFakeApi(postId)
       .then(data => {
-        console.log('getApi ', data.data);
+        //console.log('getApi ', data.data);
         setListData(data.data);
       })
       .catch(error => {

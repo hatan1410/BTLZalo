@@ -9,6 +9,10 @@ class ApiService {
             }
         });
     };
+
+    getFakeApi2 = async () => {
+        return await Fetch.get<FakeApiModel[]>('comments');
+    };
 }
 
 export const apiService = new ApiService();

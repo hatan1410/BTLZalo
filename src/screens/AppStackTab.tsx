@@ -13,6 +13,7 @@ import TimKiemScreen from './timkiem/TimKiemScreen';
 import {useNavigation} from '@react-navigation/native';
 import TinNhanDetailScreen from './tinnhandetail/TinNhanDetailScreen';
 import {AppColors} from '../theme/AppColors';
+import PostBaiScreen from './postbai/PostBaiScreen';
 //import { useUserData } from "../stores/user/hooks";
 
 class Screens_Name {
@@ -21,6 +22,7 @@ class Screens_Name {
   NhatKyScreen: string = 'NhatKyScreen';
   TimKiemScreen: string = 'TimKiemScreen';
   TinNhanDetailScreen: string = 'TinNhanDetailScreen';
+  PostBaiScreen: string = 'PostBaiScreen';
 }
 
 const Tab = createBottomTabNavigator();
@@ -107,6 +109,10 @@ export const AppStackTab = memo(() => {
             name={screensName.TimKiemScreen}
             component={TimKiemScreen}
           />
+          <Stack.Screen
+            name={screensName.PostBaiScreen}
+            component={PostBaiScreen}
+          />
         </Stack.Navigator>
       </SView>
     );
@@ -178,6 +184,7 @@ const SViewSearchBar = styled.View`
   }};
   align-items: center;
 `;
+
 const SViewTabBar = styled.View`
   flex: 94;
 `;
