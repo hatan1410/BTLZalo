@@ -45,6 +45,7 @@ const PostBaiScreen = memo((props: any) => {
         <STouchBack onPress={doGoback}>
           <SImageBack source={IC_ARROW_LEFT} />
         </STouchBack>
+        <SText>Tạo bài viết</SText>
         <STouchPost isEmty={isEmtyPost} onPress={doPostBai}>
           <STextPost>ĐĂNG</STextPost>
         </STouchPost>
@@ -75,7 +76,6 @@ const SNavBarView = styled.View`
   width: 100%;
   min-height: 50px;
   align-items: center;
-  justify-content: center;
   flex-direction: row;
   background-color: #fafafa;
 `;
@@ -85,8 +85,7 @@ const STouchBack = styled.TouchableOpacity`
   width: 44px;
   align-content: center;
   justify-content: center;
-  position: absolute;
-  left: 4px;
+  margin-left: 4px;
 `;
 
 const SImageBack = styled.Image`
@@ -94,6 +93,12 @@ const SImageBack = styled.Image`
   height: 25px;
   tint-color: #4a4a4a;
   align-self: center;
+`;
+
+const SText = styled.Text`
+  color: black;
+  font-size: 18px;
+  margin-left: 5px;
 `;
 
 const STouchPost = styled.TouchableOpacity<{isEmty: boolean}>`
@@ -127,6 +132,6 @@ const STextInput = styled.TextInput`
   text-align-vertical: top;
   color: black;
   padding: 16px;
-  font-size: 24px;
+  font-size: 18px;
 `;
 export default PostBaiScreen;
