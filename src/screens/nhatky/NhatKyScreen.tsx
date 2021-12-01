@@ -55,11 +55,7 @@ const NhatKyScreen = memo((props: any) => {
   });
 
   const renderPost = useCallback(({item, index}) => {
-    if (index === 0) {
-      return <DangBaiView />;
-    } else {
-      return <RenderPostItem id={item.id} name={item.body} />;
-    }
+    return <RenderPostItem id={item.id} name={item.body} />;
   }, []);
   return (
     <BaseScreen>
@@ -75,6 +71,7 @@ const NhatKyScreen = memo((props: any) => {
             colors={[AppColors.mainColor]}
           />
         }
+        ListHeaderComponent={<DangBaiView />}
       />
     </BaseScreen>
   );

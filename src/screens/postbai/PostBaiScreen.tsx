@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {View, Text, StyleSheet, Alert, Keyboard} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -11,15 +11,20 @@ const PostBaiScreen = memo((props: any) => {
   const [isEmtyPost, setIsEmtyPost] = useState<boolean>(true);
   const [content, setContent] = useState<string>('');
 
+  const goBack = () => {
+    Keyboard.dismiss();
+    nav.goBack();
+  };
+
   const doGoback = useCallback(() => {
     if (!isEmtyPost) {
       Alert.alert('', 'Nội dung chưa được lưu. Bạn có chắc muốn hủy?', [
         {text: 'Không'},
-        {text: 'Có', onPress: () => nav.goBack()},
+        {text: 'Có', onPress: () => goBack()},
       ]);
       return;
     }
-    nav.goBack();
+    goBack();
   }, [nav, isEmtyPost]);
 
   const doPostBai = useCallback(() => {
@@ -27,7 +32,7 @@ const PostBaiScreen = memo((props: any) => {
       return;
     }
     postBai(content);
-    nav.goBack();
+    goBack();
   }, [nav, content, isEmtyPost]);
 
   const postBai = content => {
