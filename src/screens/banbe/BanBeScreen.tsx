@@ -1,7 +1,6 @@
 import React, {memo, useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
-//import {BaseScreen} from '../../components';
 
 const BanBeScreen = memo((props: any) => {
   return (

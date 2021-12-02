@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useState} from 'react';
-import {View, Text, StyleSheet, Alert, Keyboard} from 'react-native';
+import {Alert, Keyboard} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -52,25 +52,32 @@ const PostBaiScreen = memo((props: any) => {
       </SNavBarView>
     );
   });
+
   return (
     <BaseScreen>
       <NavigationBar />
-      <STextInput
-        multiline={true}
-        onChangeText={val => {
-          setContent(val);
-          if (val === '') {
-            setIsEmtyPost(true);
-          } else {
-            setIsEmtyPost(false);
-          }
-        }}
-        placeholder="Bạn đang nghĩ gì?"
-        placeholderTextColor={'#bebfbf'}
-      />
+      <SViewContent>
+        <STextInput
+          multiline={true}
+          onChangeText={val => {
+            setContent(val);
+            if (val === '') {
+              setIsEmtyPost(true);
+            } else {
+              setIsEmtyPost(false);
+            }
+          }}
+          placeholder="Bạn đang nghĩ gì?"
+          placeholderTextColor={'#bebfbf'}
+        />
+      </SViewContent>
     </BaseScreen>
   );
 });
+
+const SViewContent = styled.View`
+  flex: 94;
+`;
 
 const SNavBarView = styled.View`
   width: 100%;

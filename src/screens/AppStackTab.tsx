@@ -36,7 +36,6 @@ export const AppStackTab = memo(() => {
   const nav = useNavigation();
 
   const doGoTimKiemScreen = useCallback(() => {
-    console.log('Pressed');
     nav.navigate('TimKiemScreen');
   }, [nav]);
 
@@ -94,6 +93,12 @@ export const AppStackTab = memo(() => {
     );
   });
 
+  const forFade = ({current}) => ({
+    cardStyle: {
+      opacity: current.progress,
+    },
+  });
+
   const StackScreen = memo(() => {
     return (
       <SView>
@@ -103,6 +108,7 @@ export const AppStackTab = memo(() => {
             cardStyle: {
               backgroundColor: 'transparent',
             },
+            cardStyleInterpolator: forFade,
           }}>
           <Stack.Screen name={'TabBar'} component={TabBar} />
           <Stack.Screen
@@ -177,7 +183,7 @@ const SImage = styled.Image<{color: string}>`
 `;
 
 const SViewSearchBar = styled.View`
-  flex: 6;
+  min-height: 50px;
   flex-direction: row;
   background-color: ${() => {
     return AppColors.mainColor;
