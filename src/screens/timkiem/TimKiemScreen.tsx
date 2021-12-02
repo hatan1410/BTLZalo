@@ -38,8 +38,8 @@ const TimKiemScreen = memo((props: any) => {
                 setisEmtyText(false);
               }
             }}
-            placeholder="Tìm kiếm bạn bè..."
-            placeholderTextColor={'#8E8E93'}
+            placeholder="Tìm bạn bè, tin nhắn..."
+            placeholderTextColor={'#848D92'}
           />
           {!isEmtyText && (
             <TouchableWithoutFeedback onPress={doDeleteText}>
@@ -104,7 +104,7 @@ const SImageSearch = styled.Image`
   width: 15px;
   height: 15px;
   align-self: center;
-  tint-color: gray;
+  tint-color: #848d92;
   margin: 0px 8px 0px 10px;
 `;
 
@@ -112,7 +112,7 @@ const SImageDelete = styled.Image`
   width: 18px;
   height: 18px;
   align-self: center;
-  tint-color: gray;
+  tint-color: #848d92;
   margin: 0px 10px 0px 5px;
 `;
 

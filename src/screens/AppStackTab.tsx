@@ -87,7 +87,7 @@ export const AppStackTab = memo(() => {
       <TouchableWithoutFeedback onPress={doGoTimKiemScreen}>
         <SViewSearchBar>
           <SImageSearch source={IC_TIM_KIEM} />
-          <STextSearch>Tìm bạn bè</STextSearch>
+          <STextSearch>Tìm bạn bè, tin nhắn...</STextSearch>
         </SViewSearchBar>
       </TouchableWithoutFeedback>
     );
@@ -141,7 +141,7 @@ export const AppStackTab = memo(() => {
                 return <SImage color={color} source={iconName} />;
               },
               tabBarActiveTintColor: AppColors.mainColor,
-              tabBarInactiveTintColor: 'black',
+              tabBarInactiveTintColor: '#BEBFBF',
             })}>
             <Tab.Screen
               name="stackTinNhanScreen"
