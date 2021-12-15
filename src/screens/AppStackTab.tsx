@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import TinNhanScreen from './tinnhan/TinNhanScreen';
 import NhatKyScreen from './nhatky/NhatKyScreen';
-import LoginScreen from './login/LoginScreen';
+import FirstPage from './firstpage/FirstPage';
 import BanBeScreen from './banbe/BanBeScreen';
 import styled from 'styled-components/native';
 import {IC_BAN_BE, IC_NHAT_KY, IC_TIM_KIEM, IC_TIN_NHAN} from '../assets';
@@ -40,7 +40,7 @@ export const AppStackTab = memo(() => {
   }, [nav]);
 
   useEffect(() => {
-    setIsLoged(true);
+    setIsLoged(false);
   }, []);
 
   const stackNav = useCallback((stack_key: string) => {
@@ -167,7 +167,7 @@ export const AppStackTab = memo(() => {
   return (
     <SView>
       {isLoged && <StackScreen />}
-      {!isLoged && <LoginScreen />}
+      {!isLoged && <FirstPage />}
     </SView>
   );
 });
