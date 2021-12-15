@@ -8,7 +8,7 @@ export default function BackButton({ navigation }) {
     <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen_Account')} style={styles.container}>
       <Image
         style={styles.image}
-        source={require('../assets/arrow_next.png')}
+        source={require('../../assets/firstpage/arrow_next.png')}
       />
     </TouchableOpacity>
   )

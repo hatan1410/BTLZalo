@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, StyleSheet, View} from 'react-native'
+import { TouchableOpacity, StyleSheet, View, Alert} from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../../../components/firstpage/Background'
 import Logo from '../../../components/firstpage/Logo'
@@ -25,10 +25,7 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
+    Alert.alert("log in")
   }
 
   return (
@@ -46,8 +43,8 @@ export default function LoginScreen({ navigation }) {
         errorText={phone.error}
         autoCapitalize="none"
         autoCompleteType="phone"
-        textContentType="phone"
-        keyboardType="phone"
+        textContentType="telephoneNumber"
+        keyboardType="phone-pad"
       />
       <TextInput style={styles.login_input}
         label="Password"

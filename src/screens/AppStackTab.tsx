@@ -40,7 +40,7 @@ export const AppStackTab = memo(() => {
   }, [nav]);
 
   useEffect(() => {
-    setIsLoged(true);
+    setIsLoged(false);
   }, []);
 
   const stackNav = useCallback((stack_key: string) => {

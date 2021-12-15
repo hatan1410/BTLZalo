@@ -43,8 +43,8 @@ export default function SecondRegisterScreen({ navigation }) {
         errorText={phone.error}
         autoCapitalize="none"
         autoCompleteType="phone"
-        textContentType="phone"
-        keyboardType="phone"
+        textContentType="telephoneNumber"
+        keyboardType="phone-pad"
       />
      
       <TouchableOpacity   

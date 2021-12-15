@@ -35,8 +35,8 @@ export default function ResetPasswordScreen({ navigation }) {
         errorText={phone.error}
         autoCapitalize="none"
         autoCompleteType="phone"
-        textContentType="phone"
-        keyboardType="phone"
+        textContentType="telephoneNumber"
+        keyboardType="phone-pad"
       />
       <Button
         mode="contained"
