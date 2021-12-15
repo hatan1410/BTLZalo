@@ -99,6 +99,31 @@ export const AppStackTab = memo(() => {
     },
   });
 
+  const StackScreen = memo(() => {
+    return (
+      <SView>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+            cardStyleInterpolator: forFade,
+          }}>
+          <Stack.Screen name={'TabBar'} component={TabBar} />
+          <Stack.Screen
+            name={screensName.TimKiemScreen}
+            component={TimKiemScreen}
+          />
+          <Stack.Screen
+            name={screensName.PostBaiScreen}
+            component={PostBaiScreen}
+          />
+        </Stack.Navigator>
+      </SView>
+    );
+  });
+
   const TabBar = memo(() => {
     return (
       <SView>
