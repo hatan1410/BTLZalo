@@ -1,0 +1,7 @@
+export { default as StartScreen } from './StartScreen'
+export { default as LoginScreen } from './LoginScreen'
+export { default as FirstRegisterScreen } from './FirstRegisterScreen'
+export { default as SecondRegisterScreen } from './SecondRegisterScreen'
+export { default as CreatePassWord } from './CreatePassWord'
+export { default as ResetPasswordScreen } from './ResetPasswordScreen'
+export { default as Dashboard } from './Dashboard'
