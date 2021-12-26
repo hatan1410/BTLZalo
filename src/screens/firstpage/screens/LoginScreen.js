@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
 
   login_input: {
-    border: 'none',
+    
     backgroundColor: 'white',
     borderColor: '#ccc'
   }

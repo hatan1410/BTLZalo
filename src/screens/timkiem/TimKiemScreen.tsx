@@ -1,15 +1,25 @@
 import React, {memo, useEffect, useCallback, useState} from 'react';
-import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  FlatList,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import BaseScreen from '../../components/BaseScreen';
 import styled from 'styled-components/native';
 import {IC_ARROW_LEFT, IC_DELETE, IC_TIM_KIEM} from '../../assets';
 import {AppColors} from '../../theme/AppColors';
+import {apiService} from '../../helper/ApiService';
+import RenderUserItem from './component/RenderUserItem';
 
 const TimKiemScreen = memo((props: any) => {
   const nav = useNavigation();
   const [textSearch, setTextSearch] = useState<string>('');
   const [isEmtyText, setisEmtyText] = useState<boolean>(true);
+
+  const [listData, setListData] = useState<any>([]);
 
   const doGoback = useCallback(() => {
     nav.goBack();
@@ -18,6 +28,29 @@ const TimKiemScreen = memo((props: any) => {
   const doDeleteText = useCallback(() => {
     setTextSearch('');
     setisEmtyText(true);
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
+    getDataFakeApi();
+  };
+
+  const getDataFakeApi = useCallback(() => {
+    apiService
+      .getFakeApi(1)
+      .then(data => {
+        setListData(data.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+  const renderItem = useCallback(({item}) => {
+    return <RenderUserItem avatar={item.name} name={item.name} />;
   }, []);
 
   return (
@@ -38,7 +71,7 @@ const TimKiemScreen = memo((props: any) => {
                 setisEmtyText(false);
               }
             }}
-            placeholder="Tìm bạn bè, tin nhắn..."
+            placeholder="Tìm bạn bè"
             placeholderTextColor={'#848D92'}
           />
           {!isEmtyText && (
@@ -49,7 +82,11 @@ const TimKiemScreen = memo((props: any) => {
         </STextInputView>
       </SSearchBarView>
       <SViewContent>
-        <Text style={styles.baseText}>TimKiemScreen</Text>
+        <SFlatList
+          data={listData}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </SViewContent>
     </BaseScreen>
   );
@@ -61,6 +98,10 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
+
+const SFlatList = styled(FlatList)`
+  flex: 1;
+`;
 
 const SViewContent = styled.View`
   flex: 94;

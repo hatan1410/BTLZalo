@@ -8,18 +8,26 @@ import NhatKyScreen from './nhatky/NhatKyScreen';
 import FirstPage from './firstpage/FirstPage';
 import BanBeScreen from './banbe/BanBeScreen';
 import styled from 'styled-components/native';
-import {IC_BAN_BE, IC_NHAT_KY, IC_TIM_KIEM, IC_TIN_NHAN} from '../assets';
+import {
+  IC_BAN_BE,
+  IC_CA_NHAN,
+  IC_NHAT_KY,
+  IC_TIM_KIEM,
+  IC_TIN_NHAN,
+} from '../assets';
 import TimKiemScreen from './timkiem/TimKiemScreen';
 import {useNavigation} from '@react-navigation/native';
 import TinNhanDetailScreen from './tinnhandetail/TinNhanDetailScreen';
 import {AppColors} from '../theme/AppColors';
 import PostBaiScreen from './postbai/PostBaiScreen';
+import CaNhanScreen from './canhan/CaNhanScreen';
 //import { useUserData } from "../stores/user/hooks";
 
 class Screens_Name {
   TinNhanScreen: string = 'TinNhanScreen';
   BanBeScreen: string = 'BanBeScreen';
   NhatKyScreen: string = 'NhatKyScreen';
+  CaNhanScreen: string = 'CaNhanScreen';
   TimKiemScreen: string = 'TimKiemScreen';
   TinNhanDetailScreen: string = 'TinNhanDetailScreen';
   PostBaiScreen: string = 'PostBaiScreen';
@@ -40,7 +48,7 @@ export const AppStackTab = memo(() => {
   }, [nav]);
 
   useEffect(() => {
-    setIsLoged(false);
+    setIsLoged(true);
   }, []);
 
   const stackNav = useCallback((stack_key: string) => {
@@ -66,6 +74,10 @@ export const AppStackTab = memo(() => {
           name={screensName.TinNhanDetailScreen}
           component={TinNhanDetailScreen}
         />
+        <Stack.Screen
+          name={screensName.CaNhanScreen}
+          component={CaNhanScreen}
+        />
       </TabStack.Navigator>
     );
   }, []);
@@ -82,12 +94,16 @@ export const AppStackTab = memo(() => {
     return stackNav(screensName.NhatKyScreen);
   });
 
+  const stackCaNhanScreen = memo(() => {
+    return stackNav(screensName.CaNhanScreen);
+  });
+
   const SearchBar = memo(() => {
     return (
       <TouchableWithoutFeedback onPress={doGoTimKiemScreen}>
         <SViewSearchBar>
           <SImageSearch source={IC_TIM_KIEM} />
-          <STextSearch>Tìm bạn bè, tin nhắn...</STextSearch>
+          <STextSearch>Tìm bạn bè</STextSearch>
         </SViewSearchBar>
       </TouchableWithoutFeedback>
     );
@@ -136,6 +152,7 @@ export const AppStackTab = memo(() => {
                   stackTinNhanScreen: IC_TIN_NHAN,
                   stackBanBeScreen: IC_BAN_BE,
                   stackNhatKyScreen: IC_NHAT_KY,
+                  stackCaNhanScreen: IC_CA_NHAN,
                 };
                 let iconName = images[route.name];
                 return <SImage color={color} source={iconName} />;
@@ -157,6 +174,11 @@ export const AppStackTab = memo(() => {
               name="stackNhatKyScreen"
               component={stackNhatKyScreen}
               options={{title: 'Nhật ký', headerShown: false}}
+            />
+            <Tab.Screen
+              name="stackCaNhanScreen"
+              component={stackCaNhanScreen}
+              options={{title: 'Cá Nhân', headerShown: false}}
             />
           </Tab.Navigator>
         </SViewTabBar>
