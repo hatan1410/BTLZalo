@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import React, {memo, useEffect, useCallback, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
@@ -7,8 +6,7 @@ import RenderTinNhanItem from './component/RenderTinNhanItem';
 import {apiService} from '../../helper/ApiService';
 import FakeApiModel from '../../model/FakeApiModel';
 
-const TinNhanScreen = memo((props: any) => {
-  const nav = useNavigation();
+const TinNhanScreen = ({navigation}) => {
   const [listData, setListData] = useState<any>([]);
   const postId = 1;
   useEffect(() => {
@@ -32,7 +30,15 @@ const TinNhanScreen = memo((props: any) => {
   }, []);
 
   const renderItem = useCallback(({item}) => {
-    return <RenderTinNhanItem id={item.id} name={item.name} />;
+    return (
+      <RenderTinNhanItem
+        id={item.id}
+        name={item.name}
+        onPress={() => {
+          navigation.navigate('TinNhanDetailScreen', {name: item.name});
+        }}
+      />
+    );
   }, []);
 
   return (
@@ -45,7 +51,7 @@ const TinNhanScreen = memo((props: any) => {
       />
     </BaseScreen>
   );
-});
+};
 
 const styles = StyleSheet.create({
   baseText: {

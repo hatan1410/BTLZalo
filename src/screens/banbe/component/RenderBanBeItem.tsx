@@ -8,13 +8,14 @@ import BaseImageView from '../../../components/BaseImageView';
 interface Props {
   avatar: number;
   name: string;
+  onPress: () => void;
 }
 
 const RenderBanBeItem = memo((props: Props) => {
   const nav = useNavigation();
 
   const doSelectTinNhan = useCallback(() => {
-    //nav.navigate('', {name: props.name});
+    props.onPress();
   }, []);
   return (
     <TouchableOpacity onPress={doSelectTinNhan}>

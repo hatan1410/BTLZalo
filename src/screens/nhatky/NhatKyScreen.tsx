@@ -18,14 +18,14 @@ import {apiService} from '../../helper/ApiService';
 import {AppColors} from '../../theme/AppColors';
 import CommentModal from './component/CommentModal';
 
-const NhatKyScreen = memo((props: any) => {
+const NhatKyScreen = ({navigation}) => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [listData, setListData] = useState<any>([]);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const nav = useNavigation();
 
   const doPostBai = useCallback(() => {
-    nav.navigate('PostBaiScreen');
+    navigation.navigate('PostBaiScreen');
   }, []);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const NhatKyScreen = memo((props: any) => {
       </Modal>
     </BaseScreen>
   );
-});
+};
 
 const styles = StyleSheet.create({
   modalStyle: {

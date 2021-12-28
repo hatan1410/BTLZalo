@@ -41,11 +41,11 @@ export const screensName = new Screens_Name();
 export const AppStackTab = memo(() => {
   //const userData = useUserData();
   const [isLoged, setIsLoged] = useState<boolean>();
-  const nav = useNavigation();
+  const navigation = useNavigation();
 
   const doGoTimKiemScreen = useCallback(() => {
-    nav.navigate('TimKiemScreen');
-  }, [nav]);
+    navigation.navigate('TimKiemScreen', {});
+  }, [navigation]);
 
   useEffect(() => {
     setIsLoged(true);

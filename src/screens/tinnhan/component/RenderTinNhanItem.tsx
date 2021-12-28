@@ -1,19 +1,17 @@
 import React, {memo, useCallback, useMemo} from 'react';
 import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
-import {useNavigation} from '@react-navigation/native';
 import {AppColors} from '../../../theme/AppColors';
 
 interface Props {
   id: number;
   name: string;
+  onPress: () => void;
 }
 
 const RenderTinNhanItem = memo((props: Props) => {
-  const nav = useNavigation();
-
   const doSelectTinNhan = useCallback(() => {
-    nav.navigate('TinNhanDetailScreen', {name: props.name});
+    props.onPress();
   }, []);
   return (
     <TouchableOpacity onPress={doSelectTinNhan}>

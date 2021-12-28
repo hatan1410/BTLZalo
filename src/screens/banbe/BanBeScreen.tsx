@@ -1,13 +1,11 @@
 import React, {memo, useEffect, useCallback, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
-import {useNavigation} from '@react-navigation/native';
 import {apiService} from '../../helper/ApiService';
 import styled from 'styled-components/native';
 import RenderBanBeItem from './component/RenderBanBeItem';
 
-const BanBeScreen = memo((props: any) => {
-  const nav = useNavigation();
+const BanBeScreen = ({navigation}) => {
   const [listData, setListData] = useState<any>([]);
   const postId = 1;
 
@@ -50,7 +48,9 @@ const BanBeScreen = memo((props: any) => {
     );
   });
   const renderItem = useCallback(({item}) => {
-    return <RenderBanBeItem avatar={item.name} name={item.name} />;
+    return (
+      <RenderBanBeItem avatar={item.name} name={item.name} onPress={() => {}} />
+    );
   }, []);
 
   return (
@@ -63,7 +63,7 @@ const BanBeScreen = memo((props: any) => {
       />
     </BaseScreen>
   );
-});
+};
 
 const SFlatList = styled(FlatList)`
   flex: 1;
