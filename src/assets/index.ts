@@ -11,3 +11,5 @@ export const IC_OPTION = require("./ic_option.png");
 export const IC_LIKE = require("./ic_like.png");
 export const IC_LIKED = require("./ic_liked.png");
 export const IC_COMMENT = require("./ic_comment.png");
+export const IC_CLOSE = require("./ic_close.png");
+export const IC_SEND = require("./ic_send.png");

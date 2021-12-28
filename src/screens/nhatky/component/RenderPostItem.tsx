@@ -1,6 +1,5 @@
 import React, {memo, useCallback, useMemo, useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {TouchableOpacity, View, TouchableWithoutFeedback} from 'react-native';
 import styled from 'styled-components/native';
 import {IC_COMMENT, IC_LIKE, IC_LIKED, IC_OPTION} from '../../../assets';
 import {AppColors} from '../../../theme/AppColors';
@@ -67,12 +66,12 @@ const RenderPostItem = memo((props: Props) => {
             </SLikeCommentTouch>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress={props.onPressComment}>
+          <TouchableOpacity onPress={props.onPressComment}>
             <SLikeCommentTouch>
               <SCommentImage source={IC_COMMENT} />
               <STextLikeComment>14</STextLikeComment>
             </SLikeCommentTouch>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </SLikeCommentView>
       </SContainer>
     </View>
@@ -112,7 +111,7 @@ const SOptionImage = styled.Image`
 
 const STextName = styled.Text`
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   color: black;
   margin-bottom: 2px;
 `;
