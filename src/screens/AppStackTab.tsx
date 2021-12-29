@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import TinNhanScreen from './tinnhan/TinNhanScreen';
 import NhatKyScreen from './nhatky/NhatKyScreen';
-import FirstPage from './firstpage/FirstPage';
+import FirstScreen from './firstpage/FirstPage';
 import BanBeScreen from './banbe/BanBeScreen';
 import styled from 'styled-components/native';
 import {
@@ -21,6 +21,8 @@ import TinNhanDetailScreen from './tinnhandetail/TinNhanDetailScreen';
 import {AppColors} from '../theme/AppColors';
 import PostBaiScreen from './postbai/PostBaiScreen';
 import CaNhanScreen from './canhan/CaNhanScreen';
+import {apiService} from '../helper/ApiService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { useUserData } from "../stores/user/hooks";
 
 class Screens_Name {
@@ -33,23 +35,57 @@ class Screens_Name {
   PostBaiScreen: string = 'PostBaiScreen';
 }
 
+const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const TabStack = createStackNavigator();
 export const screensName = new Screens_Name();
 
 export const AppStackTab = memo(() => {
-  //const userData = useUserData();
-  const [isLoged, setIsLoged] = useState<boolean>();
+  const [isLoged, setIsLoged] = useState<boolean>(false);
   const navigation = useNavigation();
+  const [accessToken, setAccessToken] = useState('');
 
   const doGoTimKiemScreen = useCallback(() => {
     navigation.navigate('TimKiemScreen', {});
   }, [navigation]);
 
   useEffect(() => {
-    setIsLoged(true);
+    getAccessToken();
   }, []);
+
+  const getAccessToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('access_token');
+      if (value !== null) {
+        setAccessToken(value);
+      }
+    } catch (e) {
+      setAccessToken('');
+    }
+  };
+
+  const RootStackScreen = ({accessToken}) => (
+    <RootStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'transparent',
+        },
+      }}>
+      {accessToken ? (
+        <>
+          <RootStack.Screen name="App" component={StackScreen} />
+          <RootStack.Screen name="Auth" component={FirstScreen} />
+        </>
+      ) : (
+        <>
+          <RootStack.Screen name="Auth" component={FirstScreen} />
+          <RootStack.Screen name="App" component={StackScreen} />
+        </>
+      )}
+    </RootStack.Navigator>
+  );
 
   const stackNav = useCallback((stack_key: string) => {
     return (
@@ -69,10 +105,6 @@ export const AppStackTab = memo(() => {
         <Stack.Screen
           name={screensName.NhatKyScreen}
           component={NhatKyScreen}
-        />
-        <Stack.Screen
-          name={screensName.TinNhanDetailScreen}
-          component={TinNhanDetailScreen}
         />
         <Stack.Screen
           name={screensName.CaNhanScreen}
@@ -115,7 +147,7 @@ export const AppStackTab = memo(() => {
     },
   });
 
-  const StackScreen = memo(() => {
+  const StackScreen = () => {
     return (
       <SView>
         <Stack.Navigator
@@ -135,10 +167,14 @@ export const AppStackTab = memo(() => {
             name={screensName.PostBaiScreen}
             component={PostBaiScreen}
           />
+          <Stack.Screen
+            name={screensName.TinNhanDetailScreen}
+            component={TinNhanDetailScreen}
+          />
         </Stack.Navigator>
       </SView>
     );
-  });
+  };
 
   const TabBar = memo(() => {
     return (
@@ -188,8 +224,7 @@ export const AppStackTab = memo(() => {
 
   return (
     <SView>
-      {isLoged && <StackScreen />}
-      {!isLoged && <FirstPage />}
+      <RootStackScreen accessToken={accessToken} />
     </SView>
   );
 });

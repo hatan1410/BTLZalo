@@ -43,27 +43,24 @@ const TinNhanScreen = ({navigation}) => {
 
   return (
     <BaseScreen>
-      <Text style={styles.baseText}>TinNhanScreen</Text>
-      <SFlatList
-        data={listData}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <SView>
+        <SFlatList
+          data={listData}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </SView>
     </BaseScreen>
   );
 };
 
-const styles = StyleSheet.create({
-  baseText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'red',
-  },
-});
+const SView = styled.View`
+  flex: 1;
+  background-color: white;
+`;
 
 const SFlatList = styled(FlatList)`
   flex: 1;
-  padding-top: 20px;
 `;
 
 export default TinNhanScreen;

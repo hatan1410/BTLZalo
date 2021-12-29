@@ -1,12 +1,16 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {FlatList, TouchableWithoutFeedback} from 'react-native';
+import {FlatList, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import styled from 'styled-components/native';
 import {IC_CLOSE, IC_SEND} from '../../../assets';
 import {apiService} from '../../../helper/ApiService';
 import {AppColors} from '../../../theme/AppColors';
 import RenderCommentItem from './RenderCommentItem';
 
-const CommentModal = memo(() => {
+interface Props {
+  postId: string;
+  onPressClose: () => void;
+}
+const CommentModal = memo((props: Props) => {
   const [listData, setListData] = useState<any>([]);
   const [textComment, setTextComment] = useState<string>('');
   useEffect(() => {
@@ -19,9 +23,9 @@ const CommentModal = memo(() => {
 
   const getDataFakeApi = useCallback(() => {
     apiService
-      .getFakeApi(1)
+      .postListComment(props.postId)
       .then(data => {
-        setListData(data.data);
+        setListData(data.data.comments);
       })
       .catch(error => {
         console.error(error);
@@ -30,14 +34,33 @@ const CommentModal = memo(() => {
 
   const doCloseModal = useCallback(() => {
     console.log('CloseModal');
+    props.onPressClose();
   }, []);
 
   const doSendComment = useCallback(() => {
+    Keyboard.dismiss();
+    setTextComment('');
     console.log('SendComment: ' + textComment);
+    if (textComment !== '' || textComment !== null) {
+      apiService
+        .postCreateComment(props.postId, textComment)
+        .catch(error => {
+          console.error(error);
+        })
+        .finally(() => {
+          loadData();
+        });
+    }
   }, [textComment]);
 
   const renderComment = useCallback(({item, index}) => {
-    return <RenderCommentItem />;
+    return (
+      <RenderCommentItem
+        content={item.content}
+        name={item.user_username}
+        avatar={item.user_avatar}
+      />
+    );
   }, []);
 
   return (
@@ -60,6 +83,7 @@ const CommentModal = memo(() => {
         />
         <STextInputView>
           <STextInput
+            value={textComment}
             onChangeText={val => {
               setTextComment(val);
             }}

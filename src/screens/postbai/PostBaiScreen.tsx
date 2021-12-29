@@ -1,15 +1,17 @@
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Alert, Keyboard} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components/native';
 import {IC_ARROW_LEFT} from '../../assets';
 import {AppColors} from '../../theme/AppColors';
+import {apiService} from '../../helper/ApiService';
 
-const PostBaiScreen = memo((props: any) => {
+const PostBaiScreen = ({route, navigation}) => {
+  const postId = route.params.postId || null;
   const nav = useNavigation();
   const [isEmtyPost, setIsEmtyPost] = useState<boolean>(true);
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>(route.params.content);
 
   const goBack = () => {
     Keyboard.dismiss();
@@ -31,13 +33,27 @@ const PostBaiScreen = memo((props: any) => {
     if (isEmtyPost) {
       return;
     }
-    postBai(content);
-    goBack();
+    if (postId === null) {
+      postBai(content);
+    } else {
+      suaBai(postId);
+    }
+    Keyboard.dismiss();
+    navigation.navigate('NhatKyScreen', {
+      isListChanged: true,
+    });
   }, [nav, content, isEmtyPost]);
 
-  const postBai = content => {
-    //goi api post bai
-    console.log(content);
+  const postBai = useCallback(content => {
+    apiService.postCreatePost(content).catch(error => {
+      console.error(error);
+    });
+  }, []);
+
+  const suaBai = postId => {
+    apiService.postEditPost(postId, content).catch(error => {
+      console.error(error);
+    });
   };
   const NavigationBar = memo(() => {
     return (
@@ -59,6 +75,7 @@ const PostBaiScreen = memo((props: any) => {
       <SViewContent>
         <STextInput
           multiline={true}
+          value={content}
           onChangeText={val => {
             setContent(val);
             if (val === '') {
@@ -73,7 +90,7 @@ const PostBaiScreen = memo((props: any) => {
       </SViewContent>
     </BaseScreen>
   );
-});
+};
 
 const SViewContent = styled.View`
   flex: 94;

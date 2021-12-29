@@ -1,47 +1,62 @@
-import React, {memo, useCallback, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {TouchableOpacity, View, TouchableWithoutFeedback} from 'react-native';
 import styled from 'styled-components/native';
 import {IC_COMMENT, IC_LIKE, IC_LIKED, IC_OPTION} from '../../../assets';
+import {apiService} from '../../../helper/ApiService';
 import {AppColors} from '../../../theme/AppColors';
 
 interface Props {
-  id: number;
+  content: string;
+  likes: number;
+  comments: number;
+  since: number;
   name: string;
+  avatar: string;
+  opPressLike: () => void;
   onPressComment: () => void;
+  onPressOption: () => void;
 }
 
 const RenderPostItem = memo((props: Props) => {
   const [isLiked, setisLiked] = useState<boolean>(false);
-  const [likeCount, setlikeCount] = useState<number>(0);
+  const [likeCount, setlikeCount] = useState<number>(props.likes);
+  const date = new Date(props.since * 1000);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+
+  useEffect(() => {
+    setlikeCount(props.likes);
+  }, []);
+
   const doLike = useCallback(() => {
     console.log('Like');
+
     if (isLiked) {
       setisLiked(false);
       setlikeCount(likeCount - 1);
     } else {
       setisLiked(true);
       setlikeCount(likeCount + 1);
+      props.opPressLike();
     }
   }, [isLiked]);
 
-  const doComment = useCallback(() => {
-    console.log('Comment');
-    props.onPressComment();
-  }, []);
-
   const doShowOption = useCallback(() => {
     console.log('ShowOption');
+    props.onPressOption();
   }, []);
 
   return (
     <View>
       <SContainer>
         <SUserView>
-          <SAvatar />
+          <SAvatar source={{uri: `${apiService.baseUrl}${props.avatar}`}} />
 
           <SNameAndDateView>
-            <STextName>Ha Tan</STextName>
-            <STextDate>01/12</STextDate>
+            <STextName>{props.name}</STextName>
+            <STextDate>
+              {day}/{month}
+            </STextDate>
           </SNameAndDateView>
 
           <SOptionView>
@@ -52,7 +67,7 @@ const RenderPostItem = memo((props: Props) => {
         </SUserView>
 
         <SContentView>
-          <STextContent>Post bai</STextContent>
+          <STextContent>{props.content}</STextContent>
         </SContentView>
 
         <SSeparatorView />
@@ -69,7 +84,7 @@ const RenderPostItem = memo((props: Props) => {
           <TouchableOpacity onPress={props.onPressComment}>
             <SLikeCommentTouch>
               <SCommentImage source={IC_COMMENT} />
-              <STextLikeComment>14</STextLikeComment>
+              <STextLikeComment>{props.comments}</STextLikeComment>
             </SLikeCommentTouch>
           </TouchableOpacity>
         </SLikeCommentView>
@@ -93,7 +108,7 @@ const SNameAndDateView = styled.View``;
 const SAvatar = styled.Image`
   width: 40px;
   height: 40px;
-  background-color: green;
+  background-color: gray;
   border-radius: 25px;
   margin-right: 18px;
 `;

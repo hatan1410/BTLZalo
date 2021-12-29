@@ -2,32 +2,42 @@ import React, {memo} from 'react';
 import {View} from 'react-native';
 import styled from 'styled-components/native';
 import BaseImageView from '../../../components/BaseImageView';
+import {apiService} from '../../../helper/ApiService';
 import {AppColors} from '../../../theme/AppColors';
 
-const RenderCommentItem = memo(() => {
+interface Props {
+  content: string;
+  name: string;
+  avatar: string;
+}
+
+const RenderCommentItem = memo((props: Props) => {
   return (
     <SView>
-      <SImageAvatar />
-      <SCommentView>
-        <SNameText>Ha Tan</SNameText>
-        <SCommentText>Comment</SCommentText>
-        <SSeparatorView />
-      </SCommentView>
+      <SContainerView>
+        <SImageAvatar source={{uri: `${apiService.baseUrl}${props.avatar}`}} />
+        <SCommentView>
+          <SNameText>{props.name}</SNameText>
+          <SCommentText>{props.content}</SCommentText>
+        </SCommentView>
+      </SContainerView>
+      <SSeparatorView />
     </SView>
   );
 });
 
-const SView = styled.View`
+const SView = styled.View``;
+
+const SContainerView = styled.View`
   flex-direction: row;
   background-color: white;
   align-items: center;
   margin: 10px 0px 0px 16px;
 `;
-
-const SImageAvatar = styled(BaseImageView)`
+const SImageAvatar = styled.Image`
   width: 40px;
   height: 40px;
-  background-color: green;
+  background-color: gray;
   border-radius: 25px;
   margin-right: 16px;
 `;
@@ -53,6 +63,7 @@ const SSeparatorView = styled.View`
     return AppColors.lightGray;
   }};
   margin-top: 14px;
+  margin-left: 70px;
 `;
 
 export default RenderCommentItem;
