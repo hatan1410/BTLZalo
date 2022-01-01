@@ -173,6 +173,44 @@ class ApiService {
       headers: {'Content-Type': 'multipart/form-data'},
     });
   };
+
+  postUserSearch = async (search: string) => {
+    const access_token = await AsyncStorage.getItem('access_token');
+    const bodyFormData = new FormData();
+    bodyFormData.append('access_token', access_token);
+    bodyFormData.append('q', search);
+    return await axios({
+      method: 'post',
+      url: `${this.baseUrl}api/user/search`,
+      data: bodyFormData,
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+  };
+
+  postUserFollowList = async () => {
+    const access_token = await AsyncStorage.getItem('access_token');
+    const bodyFormData = new FormData();
+    bodyFormData.append('access_token', access_token);
+    return await axios({
+      method: 'post',
+      url: `${this.baseUrl}api/user/follow.list`,
+      data: bodyFormData,
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+  };
+
+  postUserFollow = async (id: string) => {
+    const access_token = await AsyncStorage.getItem('access_token');
+    const bodyFormData = new FormData();
+    bodyFormData.append('access_token', access_token);
+    bodyFormData.append('id', id);
+    return await axios({
+      method: 'post',
+      url: `${this.baseUrl}api/user/follow`,
+      data: bodyFormData,
+      headers: {'Content-Type': 'multipart/form-data'},
+    });
+  };
 }
 
 export const apiService = new ApiService();

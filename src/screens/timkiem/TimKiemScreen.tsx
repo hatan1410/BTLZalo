@@ -30,27 +30,29 @@ const TimKiemScreen = memo((props: any) => {
     setisEmtyText(true);
   }, []);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = () => {
-    getDataFakeApi();
-  };
-
-  const getDataFakeApi = useCallback(() => {
-    apiService
-      .getFakeApi(1)
-      .then(data => {
-        setListData(data.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, []);
+  const postUserSearch = useCallback(
+    textSearch => {
+      apiService
+        .postUserSearch(textSearch)
+        .then(data => {
+          setListData(data.data.users);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    [textSearch],
+  );
 
   const renderItem = useCallback(({item}) => {
-    return <RenderUserItem avatar={item.name} name={item.name} />;
+    return (
+      <RenderUserItem
+        avatar={item.avatar}
+        name={item.fullname}
+        phone={item.phone}
+        id={item._id}
+      />
+    );
   }, []);
 
   return (
@@ -65,6 +67,7 @@ const TimKiemScreen = memo((props: any) => {
             value={textSearch}
             onChangeText={val => {
               setTextSearch(val);
+              postUserSearch(val);
               if (val === '') {
                 setisEmtyText(true);
               } else {
@@ -90,13 +93,6 @@ const TimKiemScreen = memo((props: any) => {
       </SViewContent>
     </BaseScreen>
   );
-});
-const styles = StyleSheet.create({
-  baseText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'red',
-  },
 });
 
 const SFlatList = styled(FlatList)`

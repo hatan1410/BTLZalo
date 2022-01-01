@@ -27,11 +27,9 @@ const NhatKyScreen = ({route, navigation}) => {
   const [isShowCommentModal, setIsShowCommentModal] = useState<boolean>(false);
   const [isShowOptionModal, setIsShowOptionModal] = useState<boolean>(false);
   const [isLoading, setisLoading] = useState(true);
-  const [userAvatar, setUserAvatar] = useState<any>();
+  const [userAvatar, setUserAvatar] = useState('upload/no_avatar_0.jpg');
   const [postId, setpostId] = useState('');
   const [contentPost, setContentPost] = useState('');
-  const nav = useNavigation();
-  const isListChanged = route.params?.isListChanged || null;
 
   const doPostBai = useCallback(() => {
     navigation.navigate('PostBaiScreen', {
@@ -41,14 +39,8 @@ const NhatKyScreen = ({route, navigation}) => {
   }, []);
 
   useEffect(() => {
-    console.log('useEffect');
     loadData();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log('useEffect post bai');
-  //   loadData();
-  // }, [isListChanged]);
+  });
 
   const loadData = () => {
     getListPost();
@@ -104,8 +96,8 @@ const NhatKyScreen = ({route, navigation}) => {
         getListPost();
       });
   };
-  const DangBaiView = useCallback(() => {
-    console.log('ava', userAvatar);
+  const DangBaiView = memo(() => {
+    //console.log('ava', userAvatar);
     return (
       <TouchableHighlight onPress={doPostBai}>
         <SViewPostBai>
@@ -114,7 +106,7 @@ const NhatKyScreen = ({route, navigation}) => {
         </SViewPostBai>
       </TouchableHighlight>
     );
-  }, [userAvatar]);
+  });
 
   const changeCommentModalVisible = bool => {
     setIsShowCommentModal(bool);
@@ -129,7 +121,7 @@ const NhatKyScreen = ({route, navigation}) => {
       console.error(error);
     });
   };
-  const renderPost = useCallback(({item, index}) => {
+  const renderPost = useCallback(({item}) => {
     return (
       <RenderPostItem
         content={item.content}

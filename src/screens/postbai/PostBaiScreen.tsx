@@ -39,9 +39,7 @@ const PostBaiScreen = ({route, navigation}) => {
       suaBai(postId);
     }
     Keyboard.dismiss();
-    navigation.navigate('NhatKyScreen', {
-      isListChanged: true,
-    });
+    navigation.navigate('NhatKyScreen');
   }, [nav, content, isEmtyPost]);
 
   const postBai = useCallback(content => {

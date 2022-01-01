@@ -1,27 +1,35 @@
 import React, {memo, useEffect, useCallback, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import BaseScreen from '../../components/BaseScreen';
 import {apiService} from '../../helper/ApiService';
 import styled from 'styled-components/native';
 import RenderBanBeItem from './component/RenderBanBeItem';
+import {AppColors} from '../../theme/AppColors';
 
 const BanBeScreen = ({navigation}) => {
   const [listData, setListData] = useState<any>([]);
-  const postId = 1;
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     loadData();
-  }, []);
+  });
 
   const loadData = () => {
-    getDataFakeApi();
+    getUserFollowList();
   };
 
-  const getDataFakeApi = useCallback(() => {
+  const getUserFollowList = useCallback(() => {
     apiService
-      .getFakeApi(postId)
+      .postUserFollowList()
       .then(data => {
-        setListData(data.data);
+        setListData(data.data.users);
       })
       .catch(error => {
         console.error(error);
@@ -47,9 +55,14 @@ const BanBeScreen = ({navigation}) => {
       </View>
     );
   });
+
   const renderItem = useCallback(({item}) => {
     return (
-      <RenderBanBeItem avatar={item.name} name={item.name} onPress={() => {}} />
+      <RenderBanBeItem
+        avatar={item.avatar}
+        name={item.fullname}
+        onPress={() => {}}
+      />
     );
   }, []);
 
@@ -59,7 +72,14 @@ const BanBeScreen = ({navigation}) => {
         data={listData}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
-        ListHeaderComponent={<ListHeaderComponent />}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={loadData}
+            title={'Loading...'}
+            colors={[AppColors.mainColor]}
+          />
+        }
       />
     </BaseScreen>
   );
@@ -97,7 +117,7 @@ const STextBanBe = styled.Text`
 const SImage = styled.Image`
   width: 50px;
   height: 50px;
-  background-color: green;
+  background-color: gray;
   border-radius: 25px;
   margin-right: 8px;
 `;

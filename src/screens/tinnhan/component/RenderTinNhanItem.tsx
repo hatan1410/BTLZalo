@@ -21,7 +21,7 @@ const RenderTinNhanItem = memo((props: Props) => {
           <SImageAvatar />
           <SMessageView>
             <SNameText>Ha Tan</SNameText>
-            <SMessageText>Comment</SMessageText>
+            <SMessageText>Tin nhắn</SMessageText>
           </SMessageView>
         </SContainerView>
         <SSeparatorView />

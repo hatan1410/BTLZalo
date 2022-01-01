@@ -4,38 +4,50 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {AppColors} from '../../../theme/AppColors';
 import BaseImageView from '../../../components/BaseImageView';
+import {apiService} from '../../../helper/ApiService';
 
 interface Props {
-  avatar: number;
+  id: string;
+  avatar: string;
   name: string;
+  phone: string;
 }
 
 const RenderUserItem = memo((props: Props) => {
-  const nav = useNavigation();
-
+  const [isFollowed, setisFollowed] = useState(false);
   const doSelectTinNhan = useCallback(() => {
     //nav.navigate('', {name: props.name});
   }, []);
 
   const doKetBan = useCallback(() => {
     console.log('Ket Ban');
+    apiService
+      .postUserFollow(props.id)
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => {
+        setisFollowed(true);
+      });
   }, []);
 
   return (
     <TouchableOpacity onPress={doSelectTinNhan}>
       <SContainer>
-        <SImageAvatar />
+        <SImageAvatar source={{uri: `${apiService.baseUrl}${props.avatar}`}} />
         <View>
           <STextName>{props.name}</STextName>
-          <STextSDT>Số điện thoại:</STextSDT>
+          <STextSDT>Số điện thoại: {props.phone}</STextSDT>
         </View>
-        <SKetBanView>
-          <TouchableOpacity onPress={doKetBan}>
-            <SKetBanButton>
-              <STextKetBan>KẾT BẠN</STextKetBan>
-            </SKetBanButton>
-          </TouchableOpacity>
-        </SKetBanView>
+        {!isFollowed && (
+          <SKetBanView>
+            <TouchableOpacity onPress={doKetBan}>
+              <SKetBanButton>
+                <STextKetBan>FOLLOW</STextKetBan>
+              </SKetBanButton>
+            </TouchableOpacity>
+          </SKetBanView>
+        )}
       </SContainer>
     </TouchableOpacity>
   );
@@ -51,7 +63,7 @@ const SContainer = styled.View`
 const SImageAvatar = styled(BaseImageView)`
   width: 50px;
   height: 50px;
-  background-color: green;
+  background-color: gray;
   border-radius: 25px;
   margin-right: 16px;
 `;

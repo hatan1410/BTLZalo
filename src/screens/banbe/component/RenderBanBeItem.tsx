@@ -4,9 +4,10 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import {AppColors} from '../../../theme/AppColors';
 import BaseImageView from '../../../components/BaseImageView';
+import {apiService} from '../../../helper/ApiService';
 
 interface Props {
-  avatar: number;
+  avatar: string;
   name: string;
   onPress: () => void;
 }
@@ -20,7 +21,7 @@ const RenderBanBeItem = memo((props: Props) => {
   return (
     <TouchableOpacity onPress={doSelectTinNhan}>
       <SContainer>
-        <SImageAvatar />
+        <SImageAvatar source={{uri: `${apiService.baseUrl}${props.avatar}`}} />
         <STextName>{props.name}</STextName>
       </SContainer>
     </TouchableOpacity>
@@ -37,7 +38,7 @@ const SContainer = styled.View`
 const SImageAvatar = styled(BaseImageView)`
   width: 50px;
   height: 50px;
-  background-color: green;
+  background-color: gray;
   border-radius: 25px;
   margin-right: 16px;
 `;
